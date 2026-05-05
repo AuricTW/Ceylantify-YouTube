@@ -1,5 +1,5 @@
 (() => {
-  const OVERLAY_COUNT = 13;
+  const OVERLAY_COUNT = 20;
   const OVERLAY_CLASS = "ceylan-thumbnail-overlay";
   const HOST_CLASS = "ceylan-thumbnail-host";
   const APPLIED_ATTR = "data-ceylan-overlay-applied";
