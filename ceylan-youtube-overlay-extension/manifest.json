@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Ceylan YouTube Overlay",
-  "description": "Adds random transparent Ceylan PNG overlays to YouTube thumbnails.",
+  "name": "Ceylantify YouTube",
+  "description": "Adds random transparent Ceylan overlays to YouTube thumbnails.",
   "version": "0.1.6",
   "icons": {
     "16": "assets/icons/icon16.png",
