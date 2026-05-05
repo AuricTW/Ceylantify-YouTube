@@ -1,0 +1,19 @@
+.ceylan-thumbnail-host {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+}
+
+.ceylan-thumbnail-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  z-index: 1000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
