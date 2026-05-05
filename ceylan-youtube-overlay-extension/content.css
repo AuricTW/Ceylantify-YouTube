@@ -1,5 +1,4 @@
 .ceylan-thumbnail-host {
-  position: relative !important;
   overflow: hidden !important;
   isolation: isolate !important;
 }

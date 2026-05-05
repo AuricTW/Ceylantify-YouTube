@@ -3,13 +3,13 @@
   const OVERLAY_CLASS = "ceylan-thumbnail-overlay";
   const HOST_CLASS = "ceylan-thumbnail-host";
   const APPLIED_ATTR = "data-ceylan-overlay-applied";
-  const THUMBNAIL_SELECTOR = [
+  const POSITION_ATTR = "data-ceylan-position-applied";
+  const THUMBNAIL_CONTAINER_SELECTOR = [
     "ytd-thumbnail",
     "ytd-playlist-thumbnail",
     "yt-thumbnail-view-model",
     ".yt-thumbnail-view-model",
-    ".yt-lockup-view-model-wiz__content-image",
-    "a#thumbnail"
+    ".yt-lockup-view-model-wiz__content-image"
   ].join(",");
 
   const overlayUrls = Array.from({ length: OVERLAY_COUNT }, (_, index) => {
@@ -57,14 +57,45 @@
     return rect.width >= 80 && rect.height >= 45;
   }
 
+  function hasThumbnailShape(element) {
+    const rect = element.getBoundingClientRect();
+
+    if (rect.height === 0) {
+      return false;
+    }
+
+    const ratio = rect.width / rect.height;
+    return ratio >= 0.5 && ratio <= 2.6;
+  }
+
   function resolveHost(element) {
     if (!(element instanceof HTMLElement)) {
       return null;
     }
 
-    const host = element.closest(THUMBNAIL_SELECTOR);
+    if (element.matches("a#thumbnail") && hasUsefulSize(element) && hasThumbnailShape(element)) {
+      return element;
+    }
 
-    return host instanceof HTMLElement ? host : element;
+    const container = element.closest(THUMBNAIL_CONTAINER_SELECTOR);
+
+    if (container instanceof HTMLElement) {
+      const thumbnailLink = container.querySelector("a#thumbnail");
+
+      if (thumbnailLink instanceof HTMLElement && hasUsefulSize(thumbnailLink) && hasThumbnailShape(thumbnailLink)) {
+        return thumbnailLink;
+      }
+
+      if (hasUsefulSize(container) && hasThumbnailShape(container)) {
+        return container;
+      }
+    }
+
+    if (hasUsefulSize(element) && hasThumbnailShape(element)) {
+      return element;
+    }
+
+    return null;
   }
 
   function isThumbnailTarget(element) {
@@ -80,7 +111,20 @@
       return false;
     }
 
+    if (!hasThumbnailShape(element)) {
+      return false;
+    }
+
     return true;
+  }
+
+  function prepareHost(host) {
+    host.classList.add(HOST_CLASS);
+
+    if (getComputedStyle(host).position === "static") {
+      host.style.setProperty("position", "relative", "important");
+      host.setAttribute(POSITION_ATTR, "true");
+    }
   }
 
   function applyOverlay(candidate) {
@@ -92,12 +136,12 @@
 
     if (host.querySelector(`.${OVERLAY_CLASS}`)) {
       host.setAttribute(APPLIED_ATTR, "true");
-      host.classList.add(HOST_CLASS);
+      prepareHost(host);
       return false;
     }
 
     host.setAttribute(APPLIED_ATTR, "true");
-    host.classList.add(HOST_CLASS);
+    prepareHost(host);
 
     const overlay = document.createElement("img");
     overlay.className = OVERLAY_CLASS;
@@ -141,6 +185,23 @@
 
     if (applied > 0) {
       console.info(`[Ceylan Overlay] applied ${applied} thumbnail overlays`);
+    }
+  }
+
+  function clearExistingOverlays() {
+    for (const overlay of document.querySelectorAll(`.${OVERLAY_CLASS}`)) {
+      const host = overlay.parentElement;
+      overlay.remove();
+
+      if (host instanceof HTMLElement) {
+        host.classList.remove(HOST_CLASS);
+        host.removeAttribute(APPLIED_ATTR);
+
+        if (host.hasAttribute(POSITION_ATTR)) {
+          host.style.removeProperty("position");
+          host.removeAttribute(POSITION_ATTR);
+        }
+      }
     }
   }
 
@@ -191,6 +252,7 @@
   }
 
   function boot() {
+    clearExistingOverlays();
     scanThumbnails();
     observeMutations();
     observeScroll();
