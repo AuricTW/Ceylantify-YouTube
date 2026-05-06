@@ -1,11 +1,30 @@
-# Ceylantify-YouTube
-Your YouTube Doesn't Need Plugins, But Ceylantify-YouTube is a must-have.
+<div align="center">
 
-[English](README.md) | [繁體中文](README.zh-TW.md)
+<h1>Ceylantify-YouTube</h1>
 
-A local Chrome Manifest V3 extension prototype that adds random transparent Ceylan PNG overlays to YouTube thumbnails.
+<p><strong>Your YouTube doesn't need more plugins. It needs Ceylan.</strong></p>
 
-The current goal is to test the effect as an unpacked local extension first, then prepare a cleaner Chrome Web Store version if the interaction works well across YouTube layouts.
+<p>
+  Are your YouTube thumbnails too normal?<br>
+  Ceylantify YouTube adds random transparent Ceylan overlays to thumbnails across YouTube.
+</p>
+
+<p>
+  <a href="https://chromewebstore.google.com/detail/ceylantify-youtube/lhmecnaopjkaogbmgmcmmgecmfmdllga">
+    <img alt="Install on Chrome" src="https://img.shields.io/badge/Chrome-Install-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white">
+  </a>
+</p>
+
+<p>
+  <a href="README.md">English</a> |
+  <a href="README.zh-TW.md">繁體中文</a>
+</p>
+
+</div>
+
+---
+
+Ceylantify YouTube is a Chrome Manifest V3 extension that adds random transparent Ceylan PNG overlays to YouTube thumbnails. It is available on the Chrome Web Store and can also be loaded locally for development.
 
 ## Features
 
@@ -15,6 +34,10 @@ The current goal is to test the effect as an unpacked local extension first, the
 - Uses `MutationObserver` to handle YouTube dynamic loading.
 - Targets common YouTube surfaces such as home feed, search results, video sidebars, and infinite scrolling.
 - Keeps thumbnail clicks working by setting overlays to `pointer-events: none`.
+
+## Install
+
+Install from the [Chrome Web Store](https://chromewebstore.google.com/detail/ceylantify-youtube/lhmecnaopjkaogbmgmcmmgecmfmdllga).
 
 ## Project Structure
 
@@ -36,7 +59,7 @@ The current goal is to test the effect as an unpacked local extension first, the
 `-- download_ceylan_thumbnails.py
 ```
 
-## Local Installation
+## Local Development Installation
 
 1. Open Chrome and go to `chrome://extensions`.
 2. Enable Developer mode.
@@ -103,8 +126,7 @@ This extension does not collect, store, or transmit user data. It only runs loca
 - Add overlay density or probability settings.
 - Add asset selection modes.
 - Improve selectors for more YouTube layouts.
-- Prepare icons, store listing text, screenshots, and privacy disclosure for Chrome Web Store.
 
 ## Status
 
-Experimental local prototype.
+Published on the Chrome Web Store. Local development remains available through unpacked extension loading.

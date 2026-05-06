@@ -1,11 +1,30 @@
-# Ceylantify-YouTube 
-你的YT不需要其他插件，唯獨 Ceylantify-YouTube 你必須擁有
+<div align="center">
 
-[English](README.md) | [繁體中文](README.zh-TW.md)
+<h1>Ceylantify-YouTube</h1>
 
-一個本機 Chrome Manifest V3 擴充功能原型，用來在 YouTube 影片縮圖上加上隨機的錫蘭透明 PNG overlay。
+<p><strong>你的 YouTube 不需要更多插件，它需要錫蘭。</strong></p>
 
-目前目標是先做成本機可載入的 unpacked extension，測試首頁、搜尋結果、影片右側推薦與無限滾動等 YouTube 版面上的效果。確認互動與顯示穩定後，再整理成更適合上架 Chrome Web Store 的版本。
+<p>
+  覺得 YouTube 縮圖太正常了嗎？<br>
+  Ceylantify YouTube 會把隨機錫蘭透明 PNG 疊到 YouTube 縮圖上。
+</p>
+
+<p>
+  <a href="https://chromewebstore.google.com/detail/ceylantify-youtube/lhmecnaopjkaogbmgmcmmgecmfmdllga">
+    <img alt="Install on Chrome" src="https://img.shields.io/badge/Chrome-Install-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white">
+  </a>
+</p>
+
+<p>
+  <a href="README.md">English</a> |
+  <a href="README.zh-TW.md">繁體中文</a>
+</p>
+
+</div>
+
+---
+
+Ceylantify YouTube 是一個 Chrome Manifest V3 擴充功能，用來在 YouTube 影片縮圖上加上隨機的錫蘭透明 PNG overlay。目前已上架 Chrome Web Store，也可以用 unpacked extension 方式本機載入開發。
 
 ## 功能
 
@@ -15,6 +34,10 @@
 - 使用 `MutationObserver` 處理 YouTube 的動態載入。
 - 目標支援首頁、搜尋結果、影片右側推薦、無限滾動等常見 YouTube 頁面。
 - overlay 使用 `pointer-events: none`，不會阻擋原本縮圖點擊。
+
+## 安裝
+
+從 [Chrome Web Store](https://chromewebstore.google.com/detail/ceylantify-youtube/lhmecnaopjkaogbmgmcmmgecmfmdllga) 安裝。
 
 ## 專案結構
 
@@ -36,7 +59,7 @@
 `-- download_ceylan_thumbnails.py
 ```
 
-## 本機安裝
+## 本機開發安裝
 
 1. 開啟 Chrome，前往 `chrome://extensions`。
 2. 開啟 Developer mode。
@@ -103,8 +126,7 @@ node --check ceylan-youtube-overlay-extension/content.js
 - 新增 overlay 密度或出現機率設定。
 - 新增 overlay 圖片選擇模式。
 - 改善更多 YouTube 版面的 selector 支援。
-- 準備 Chrome Web Store 所需的 icon、商店描述、截圖與隱私揭露內容。
 
 ## 狀態
 
-實驗中的本機原型。
+已上架 Chrome Web Store。本機仍可用 unpacked extension 方式載入開發。
