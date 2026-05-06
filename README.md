@@ -2,7 +2,7 @@
 
 <h1>Ceylantify-YouTube</h1>
 
-<p><strong>Your YouTube doesn't need more plugins. It needs Ceylan.</strong></p>
+<p><strong>Your YouTube doesn't need more plugins. It needs Ceylantify-YouTube.</strong></p>
 
 <p>
   Are your YouTube thumbnails too normal?<br>
