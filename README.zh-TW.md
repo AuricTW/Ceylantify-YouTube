@@ -2,7 +2,7 @@
 
 <h1>Ceylantify-YouTube</h1>
 
-<p><strong>你的 YouTube 不需要更多插件，它需要錫蘭。</strong></p>
+<p><strong>你的 YouTube 不需要更多插件，但它需要Ceylantify-YouTube。</strong></p>
 
 <p>
   覺得 YouTube 縮圖太正常了嗎？<br>
