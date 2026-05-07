@@ -92,7 +92,7 @@
   }
 
   function setPreviewHost(host) {
-    if (activePreviewHost && activePreviewHost !== host && !shouldHideOverlay(activePreviewHost)) {
+    if (activePreviewHost && activePreviewHost !== host) {
       activePreviewHost.classList.remove(PREVIEWING_CLASS);
     }
 
@@ -133,10 +133,16 @@
     host.addEventListener("mouseenter", () => setPreviewHost(host), { passive: true });
     host.addEventListener("focusin", () => setPreviewHost(host));
 
-    const maybeClearPreviewHost = () => {
-      if (activePreviewHost === host && !shouldHideOverlay(host)) {
-        setPreviewHost(null);
+    const maybeClearPreviewHost = (event) => {
+      if ("clientX" in event && "clientY" in event) {
+        rememberPointerPosition(event);
       }
+
+      requestAnimationFrame(() => {
+        if (activePreviewHost === host && !shouldHideOverlay(host)) {
+          setPreviewHost(null);
+        }
+      });
     };
 
     host.addEventListener("pointerleave", maybeClearPreviewHost, { passive: true });
