@@ -2,8 +2,10 @@
   const OVERLAY_COUNT = 20;
   const OVERLAY_CLASS = "ceylan-thumbnail-overlay";
   const HOST_CLASS = "ceylan-thumbnail-host";
+  const PREVIEWING_CLASS = "ceylan-thumbnail-previewing";
   const APPLIED_ATTR = "data-ceylan-overlay-applied";
   const POSITION_ATTR = "data-ceylan-position-applied";
+  const HOVER_LISTENERS_ATTR = "data-ceylan-hover-listeners";
   const THUMBNAIL_CONTAINER_SELECTOR = [
     "ytd-thumbnail",
     "ytd-playlist-thumbnail",
@@ -47,6 +49,9 @@
   let scanTimer = 0;
   let bootScanCount = 0;
   let scrollScanTimer = 0;
+  let pointerX = null;
+  let pointerY = null;
+  let activePreviewHost = null;
 
   function randomOverlayUrl() {
     return overlayUrls[Math.floor(Math.random() * overlayUrls.length)];
@@ -66,6 +71,77 @@
 
     const ratio = rect.width / rect.height;
     return ratio >= 0.5 && ratio <= 2.6;
+  }
+
+  function rememberPointerPosition(event) {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+  }
+
+  function isPointerInside(element) {
+    if (pointerX === null || pointerY === null) {
+      return false;
+    }
+
+    const rect = element.getBoundingClientRect();
+    return pointerX >= rect.left && pointerX <= rect.right && pointerY >= rect.top && pointerY <= rect.bottom;
+  }
+
+  function shouldHideOverlay(host) {
+    return host.matches(":hover") || host.matches(":focus-within") || isPointerInside(host);
+  }
+
+  function setPreviewHost(host) {
+    if (activePreviewHost && activePreviewHost !== host && !shouldHideOverlay(activePreviewHost)) {
+      activePreviewHost.classList.remove(PREVIEWING_CLASS);
+    }
+
+    activePreviewHost = host;
+
+    if (activePreviewHost) {
+      activePreviewHost.classList.add(PREVIEWING_CLASS);
+    }
+  }
+
+  function updatePointerPreviewHost(event) {
+    rememberPointerPosition(event);
+
+    const pointedElement = document.elementFromPoint(pointerX, pointerY);
+    let host = pointedElement instanceof Element ? pointedElement.closest(`.${HOST_CLASS}`) : null;
+
+    if (!(host instanceof HTMLElement) && activePreviewHost && isPointerInside(activePreviewHost)) {
+      host = activePreviewHost;
+    }
+
+    setPreviewHost(host instanceof HTMLElement ? host : null);
+  }
+
+  function clearPointerPreviewHost() {
+    pointerX = null;
+    pointerY = null;
+    setPreviewHost(null);
+  }
+
+  function attachHoverListeners(host) {
+    if (host.hasAttribute(HOVER_LISTENERS_ATTR)) {
+      return;
+    }
+
+    host.setAttribute(HOVER_LISTENERS_ATTR, "true");
+
+    host.addEventListener("pointerenter", () => setPreviewHost(host), { passive: true });
+    host.addEventListener("mouseenter", () => setPreviewHost(host), { passive: true });
+    host.addEventListener("focusin", () => setPreviewHost(host));
+
+    const maybeClearPreviewHost = () => {
+      if (activePreviewHost === host && !shouldHideOverlay(host)) {
+        setPreviewHost(null);
+      }
+    };
+
+    host.addEventListener("pointerleave", maybeClearPreviewHost, { passive: true });
+    host.addEventListener("mouseleave", maybeClearPreviewHost, { passive: true });
+    host.addEventListener("focusout", maybeClearPreviewHost);
   }
 
   function resolveHost(element) {
@@ -120,10 +196,15 @@
 
   function prepareHost(host) {
     host.classList.add(HOST_CLASS);
+    attachHoverListeners(host);
 
     if (getComputedStyle(host).position === "static") {
       host.style.setProperty("position", "relative", "important");
       host.setAttribute(POSITION_ATTR, "true");
+    }
+
+    if (shouldHideOverlay(host)) {
+      setPreviewHost(host);
     }
   }
 
@@ -144,6 +225,13 @@
     prepareHost(host);
 
     const overlay = document.createElement("img");
+    const shouldStartHidden = shouldHideOverlay(host);
+
+    if (shouldStartHidden) {
+      host.classList.add(PREVIEWING_CLASS);
+      overlay.style.setProperty("opacity", "0", "important");
+    }
+
     overlay.className = OVERLAY_CLASS;
     overlay.src = randomOverlayUrl();
     overlay.alt = "";
@@ -152,6 +240,11 @@
     overlay.setAttribute("aria-hidden", "true");
 
     host.appendChild(overlay);
+
+    if (shouldStartHidden) {
+      requestAnimationFrame(() => overlay.style.removeProperty("opacity"));
+    }
+
     return true;
   }
 
@@ -195,6 +288,7 @@
 
       if (host instanceof HTMLElement) {
         host.classList.remove(HOST_CLASS);
+        host.classList.remove(PREVIEWING_CLASS);
         host.removeAttribute(APPLIED_ATTR);
 
         if (host.hasAttribute(POSITION_ATTR)) {
@@ -251,8 +345,16 @@
     window.addEventListener("wheel", queueScrollScan, { passive: true });
   }
 
+  function observePointer() {
+    document.addEventListener("pointermove", updatePointerPreviewHost, { capture: true, passive: true });
+    document.addEventListener("mousemove", updatePointerPreviewHost, { capture: true, passive: true });
+    document.addEventListener("mouseleave", clearPointerPreviewHost, { capture: true, passive: true });
+    window.addEventListener("blur", clearPointerPreviewHost, true);
+  }
+
   function boot() {
     clearExistingOverlays();
+    observePointer();
     scanThumbnails();
     observeMutations();
     observeScroll();

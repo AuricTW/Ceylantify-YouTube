@@ -15,4 +15,12 @@
   z-index: 1000 !important;
   opacity: 1 !important;
   visibility: visible !important;
+  transition: opacity 160ms ease-out !important;
+  will-change: opacity !important;
+}
+
+.ceylan-thumbnail-host:hover > .ceylan-thumbnail-overlay,
+.ceylan-thumbnail-host:focus-within > .ceylan-thumbnail-overlay,
+.ceylan-thumbnail-host.ceylan-thumbnail-previewing > .ceylan-thumbnail-overlay {
+  opacity: 0 !important;
 }
