@@ -14,6 +14,12 @@
     ".yt-lockup-view-model-wiz__content-image"
   ].join(",");
 
+  const SHORTS_THUMBNAIL_SELECTOR = [
+    "a#thumbnail[href*='/shorts']",
+    "a[href*='/shorts/']",
+    "a.shortsLockupViewModelHostEndpoint"
+  ].join(",");
+
   const overlayUrls = Array.from({ length: OVERLAY_COUNT }, (_, index) => {
     const fileName = `${String(index + 1).padStart(3, "0")}.png`;
     return chrome.runtime.getURL(`assets/overlays/${fileName}`);
@@ -197,7 +203,19 @@
       return false;
     }
 
+    if (isShortsThumbnail(element)) {
+      return false;
+    }
+
     return true;
+  }
+
+  function isShortsThumbnail(element) {
+    return Boolean(
+      element.matches(SHORTS_THUMBNAIL_SELECTOR) ||
+      element.closest(SHORTS_THUMBNAIL_SELECTOR) ||
+      element.querySelector(SHORTS_THUMBNAIL_SELECTOR)
+    );
   }
 
   function prepareHost(host) {
@@ -214,10 +232,27 @@
     }
   }
 
+  function removeOverlayFromHost(host) {
+    host.querySelector(`.${OVERLAY_CLASS}`)?.remove();
+    host.classList.remove(HOST_CLASS);
+    host.classList.remove(PREVIEWING_CLASS);
+    host.removeAttribute(APPLIED_ATTR);
+
+    if (host.hasAttribute(POSITION_ATTR)) {
+      host.style.removeProperty("position");
+      host.removeAttribute(POSITION_ATTR);
+    }
+  }
+
   function applyOverlay(candidate) {
     const host = resolveHost(candidate);
 
-    if (!host || !isThumbnailTarget(host)) {
+    if (!host) {
+      return false;
+    }
+
+    if (!isThumbnailTarget(host)) {
+      removeOverlayFromHost(host);
       return false;
     }
 
@@ -293,14 +328,7 @@
       overlay.remove();
 
       if (host instanceof HTMLElement) {
-        host.classList.remove(HOST_CLASS);
-        host.classList.remove(PREVIEWING_CLASS);
-        host.removeAttribute(APPLIED_ATTR);
-
-        if (host.hasAttribute(POSITION_ATTR)) {
-          host.style.removeProperty("position");
-          host.removeAttribute(POSITION_ATTR);
-        }
+        removeOverlayFromHost(host);
       }
     }
   }
