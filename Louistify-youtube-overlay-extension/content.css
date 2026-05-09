@@ -1,0 +1,26 @@
+.louis-thumbnail-host {
+  overflow: hidden !important;
+  isolation: isolate !important;
+}
+
+.louis-thumbnail-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  z-index: 1000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: opacity 160ms ease-out !important;
+  will-change: opacity !important;
+}
+
+.louis-thumbnail-host:hover > .louis-thumbnail-overlay,
+.louis-thumbnail-host:focus-within > .louis-thumbnail-overlay,
+.louis-thumbnail-host.louis-thumbnail-previewing > .louis-thumbnail-overlay {
+  opacity: 0 !important;
+}
