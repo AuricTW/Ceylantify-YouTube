@@ -16,6 +16,9 @@
   <a href="https://addons.mozilla.org/zh-TW/firefox/addon/ceylantify-youtube/">
     <img alt="Install on Firefox" src="https://img.shields.io/badge/Firefox-Add--ons-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white">
   </a>
+  <a href="https://microsoftedge.microsoft.com/addons/detail/ceylantify-youtube/lphhacbckifmfamlbobpfhapkbjbbepm">
+    <img alt="Install on Microsoft Edge" src="https://img.shields.io/badge/Edge-Add--ons-0078D7?style=for-the-badge&logo=microsoftedge&logoColor=white">
+  </a>
 </p>
 
 <p>
@@ -27,11 +30,11 @@
 
 ---
 
-Ceylantify YouTube is a Manifest V3 extension that adds random transparent Ceylan PNG overlays to YouTube thumbnails. It is available on the Chrome Web Store and Firefox Add-ons, and can also be loaded locally for development.
+Ceylantify YouTube is a Manifest V3 extension that adds random transparent Ceylan PNG overlays to YouTube thumbnails. It is available on the Chrome Web Store, Firefox Add-ons, and Microsoft Edge Add-ons, and can also be loaded locally for development.
 
 ## Features
 
-- Chrome Manifest V3 extension.
+- Manifest V3 browser extension.
 - Content script scans YouTube thumbnail containers.
 - Adds one random transparent Ceylan PNG overlay to each thumbnail.
 - Uses `MutationObserver` to handle YouTube dynamic loading.
@@ -40,7 +43,7 @@ Ceylantify YouTube is a Manifest V3 extension that adds random transparent Ceyla
 
 ## Install
 
-Install from the [Chrome Web Store](https://chromewebstore.google.com/detail/ceylantify-youtube/lhmecnaopjkaogbmgmcmmgecmfmdllga) or [Firefox Add-ons](https://addons.mozilla.org/zh-TW/firefox/addon/ceylantify-youtube/).
+Install from the [Chrome Web Store](https://chromewebstore.google.com/detail/ceylantify-youtube/lhmecnaopjkaogbmgmcmmgecmfmdllga), [Firefox Add-ons](https://addons.mozilla.org/zh-TW/firefox/addon/ceylantify-youtube/), or [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/ceylantify-youtube/lphhacbckifmfamlbobpfhapkbjbbepm).
 
 ## Project Structure
 
@@ -132,4 +135,4 @@ This extension does not collect, store, or transmit user data. It only runs loca
 
 ## Status
 
-Published on the Chrome Web Store and Firefox Add-ons. Local development remains available through unpacked extension loading.
+Published on the Chrome Web Store, Firefox Add-ons, and Microsoft Edge Add-ons. Local development remains available through unpacked extension loading.

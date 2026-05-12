@@ -16,6 +16,9 @@
   <a href="https://addons.mozilla.org/zh-TW/firefox/addon/ceylantify-youtube/">
     <img alt="Install on Firefox" src="https://img.shields.io/badge/Firefox-Add--ons-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white">
   </a>
+  <a href="https://microsoftedge.microsoft.com/addons/detail/ceylantify-youtube/lphhacbckifmfamlbobpfhapkbjbbepm">
+    <img alt="Install on Microsoft Edge" src="https://img.shields.io/badge/Edge-Add--ons-0078D7?style=for-the-badge&logo=microsoftedge&logoColor=white">
+  </a>
 </p>
 
 <p>
@@ -27,11 +30,11 @@
 
 ---
 
-Ceylantify YouTube 是一個 Manifest V3 擴充功能，用來在 YouTube 影片縮圖上加上隨機的錫蘭透明 PNG overlay。目前已上架 Chrome Web Store 和 Firefox Add-ons，也可以用 unpacked extension 方式本機載入開發。
+Ceylantify YouTube 是一個 Manifest V3 擴充功能，用來在 YouTube 影片縮圖上加上隨機的錫蘭透明 PNG overlay。目前已上架 Chrome Web Store、Firefox Add-ons 和 Microsoft Edge Add-ons，也可以用 unpacked extension 方式本機載入開發。
 
 ## 功能
 
-- Chrome Manifest V3 extension。
+- Manifest V3 browser extension。
 - Content script 會自動掃描 YouTube 縮圖容器。
 - 對每個縮圖插入一張隨機錫蘭透明 PNG overlay。
 - 使用 `MutationObserver` 處理 YouTube 的動態載入。
@@ -40,7 +43,7 @@ Ceylantify YouTube 是一個 Manifest V3 擴充功能，用來在 YouTube 影片
 
 ## 安裝
 
-從 [Chrome Web Store](https://chromewebstore.google.com/detail/ceylantify-youtube/lhmecnaopjkaogbmgmcmmgecmfmdllga) 或 [Firefox Add-ons](https://addons.mozilla.org/zh-TW/firefox/addon/ceylantify-youtube/) 安裝。
+從 [Chrome Web Store](https://chromewebstore.google.com/detail/ceylantify-youtube/lhmecnaopjkaogbmgmcmmgecmfmdllga)、[Firefox Add-ons](https://addons.mozilla.org/zh-TW/firefox/addon/ceylantify-youtube/) 或 [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/ceylantify-youtube/lphhacbckifmfamlbobpfhapkbjbbepm) 安裝。
 
 ## 專案結構
 
@@ -132,4 +135,4 @@ node --check ceylan-youtube-overlay-extension/content.js
 
 ## 狀態
 
-已上架 Chrome Web Store 和 Firefox Add-ons。本機仍可用 unpacked extension 方式載入開發。
+已上架 Chrome Web Store、Firefox Add-ons 和 Microsoft Edge Add-ons。本機仍可用 unpacked extension 方式載入開發。
